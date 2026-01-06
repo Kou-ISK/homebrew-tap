@@ -1,7 +1,7 @@
 cask "sportaglytics" do
-  version "0.2.0"
-  sha256 arm:   "db847fd4f3c2f6919d0829799e51db1f514799fe5859f72194e94c4ec028c932",
-         intel: "3a71ac90d578e9e17b86f79a9e4ab06114cd1d118c9675235da650ea73327833"
+  version "0.2.1"
+  sha256 arm:   "15b4d1f8e749a1eb20e9f37c217fecbd8ed0228a9a167698b81939c2c828fd27",
+         intel: "1a838620768bc462ccafe16b922a40d8f59f9b949599e5fe803e1e431a7c527c"
 
   url "https://github.com/Kou-ISK/sportaglytics/releases/download/v#{version}/SporTagLytics-#{version}-#{Hardware::CPU.arch}.dmg",
       verified: "github.com/Kou-ISK/sportaglytics/"
