@@ -1,9 +1,9 @@
 cask "sportaglytics" do
   arch arm: "arm64", intel: "x64"
 
-  version "0.17.4"
-  sha256 arm:   "a5fb7056c243dd8f096f8f02aab5edc28a38fada31527c731ca2e7f33f7cb742",
-         intel: "cef6bc50f707b5db54bbb6af341d1f75ebaae578e73d6a2a6d95e476edb94862"
+  version "0.17.7"
+  sha256 arm: "120393940553b08dcba29547acf713b88cf2519e4d1a060886e76b63c799c340",
+         intel: "a51719692138b6ee0de180eddc8ea6bb537e62ddaa994ac83ea004db6e935e3d"
 
   url "https://github.com/Kou-ISK/sportaglytics/releases/download/v#{version}/SporTagLytics-#{version}-#{arch}.dmg",
       verified: "github.com/Kou-ISK/sportaglytics/"
@@ -13,7 +13,15 @@ cask "sportaglytics" do
 
   livecheck do
     url :url
-    strategy :github_latest
+    strategy :github_releases do |json|
+      json.filter_map do |release|
+        next if release["draft"] || release["prerelease"]
+        version = release["tag_name"]&.match(/^v(\d+\.\d+\.\d+)$/)&.[](1)
+        next unless version
+        names = release.fetch("assets", []).map { |asset| asset["name"] }
+        version if %w[arm64 x64].all? { |arch| names.include?("SporTagLytics-#{version}-#{arch}.dmg") }
+      end
+    end
   end
 
   app "SporTagLytics.app"
